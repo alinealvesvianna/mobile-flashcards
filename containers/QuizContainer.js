@@ -9,62 +9,109 @@ class QuizContainer extends Component {
     isShowAnswer: false,
     questionNumber: 0,
     correctAnswers: 0,
-    isVisibleModal: false
+    isVisibleModal: false,
   }
 
   onHandleCorrectAnswer = answer => {
     const { questionNumber, correctAnswers } = this.state
-
-    if (this.state.answer !== '') {
-      if (answer === this.state.answer) {
+    debugger
+    if (answer !== undefined) {
+      if (this.state.answer !== '') {
+        if (answer === this.state.answer) {
+          this.setState((prevState, props) => ({
+            correctAnswers: prevState.correctAnswers + 1
+          }))
+        }
         this.setState((prevState, props) => ({
-          correctAnswers: prevState.correctAnswers + 1
+          questionNumber: prevState.questionNumber + 1,
+          answer: '',
+          correctAnswers: prevState.correctAnswers
         }))
+      } else {
+        this.setState({ isVisibleModal: true })
       }
-
-      this.setState((prevState, props) => ({
-        questionNumber: prevState.questionNumber + 1,
-        answer: '',
-        correctAnswers: prevState.correctAnswers
-      }))
-
-      alert(JSON.stringify(answer))
-    } else {
-      this.setState({ isVisibleModal: true })
+    }else{
+        this.setState({
+            finishAnswers: true,
+        })
     }
   }
 
   onHandleIncorrectAnswer() {
-    let { questionNumber } = this.state
-    this.setState({ questionNumber: questionNumber + 1, answer: '' })
+    const { questionNumber } = this.state
+    this.setState((prevState, props) => ({
+      questionNumber: prevState.questionNumber + 1,
+      answer: ''
+    }))
   }
 
   render() {
     const title = this.props.navigation.state.params.deckTitle
 
-    const { questionNumber, correctAnswers, answer, isShowAnswer, isVisibleModal } = this.state
+    const {
+      questionNumber,
+      correctAnswers,
+      answer,
+      isShowAnswer,
+      isVisibleModal,
+    } = this.state
     const { allDecks } = this.props
 
     return (
       <View style={styles.container}>
         <ModalGame
-            isVisible={isVisibleModal}
-            errorMessage={"A resposta não pode ser vazia!"}
-            onCloseClick={() => this.setState({ isVisibleModal: false })}
+          isVisible={isVisibleModal}
+          errorMessage={'A resposta não pode ser vazia!'}
+          onCloseClick={() => this.setState({ isVisibleModal: false })}
         />
 
         {allDecks.map((deck, index) => {
           if (deck.title === title) {
             return (
               <View key={index}>
+                {questionNumber === deck.questions.length && (
+                  <View>
+                    <View>
+                      <Text>
+                        Congratulations! You have finished quiz
+                      </Text>
+                      <Text>
+                        You have correctly answered
+                      </Text>
+                      <Text>
+                        on {correctAnswers} of {deck.questions.length}
+                        questions
+                      </Text>
+                    </View>
+                    <View>
+                      <Button
+                        onPress={() =>
+                          this.setState({
+                            questionNumber: 0,
+                            correctAnswers: 0
+                          })
+                        }
+                        title="Restart quiz"
+                        color="#000"
+                      />
+                    </View>
+                    <View>
+                      <Button
+                        onPress={() => navigation.goBack()}
+                        title="Back to deck"
+                        color="#fff"
+                      />
+                    </View>
+                  </View>
+                )}
+
                 <View key={deck.title}>
                   <Text>
                     {questionNumber + 1}/{deck.questions.length}
                   </Text>
                 </View>
 
-                <View>
-                  {!isShowAnswer ? (
+                  {(!isShowAnswer && questionNumber < deck.questions.length) && (
                     <View>
                       <View>
                         <Text
@@ -105,7 +152,9 @@ class QuizContainer extends Component {
                         <Button
                           onPress={() =>
                             this.onHandleCorrectAnswer(
-                              deck.questions[questionNumber].answer
+                              questionNumber === deck.questions.length
+                                ? (undefined)
+                                : (deck.questions[questionNumber].answer)
                             )
                           }
                           title="Resposta Correta"
@@ -125,7 +174,8 @@ class QuizContainer extends Component {
                         />
                       </View>
                     </View>
-                  ) : (
+                  )}
+                  {isShowAnswer &&(
                     <View>
                       <View>
                         <Text>{deck.questions[questionNumber].answer}</Text>
@@ -137,7 +187,7 @@ class QuizContainer extends Component {
                       />
                     </View>
                   )}
-                </View>
+
               </View>
             )
           }
