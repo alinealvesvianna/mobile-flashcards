@@ -19,10 +19,10 @@ class NewQuestionContainer extends Component {
       answer: this.state.answer
     }
     addCard(title, dataQuestion)
-    .then(data => console.log('foi um sucesso no servidor', data))
-    // .then(console.log('esse é o allDecks', this.props.allDecks))
-    .then((title,dataQuestion) => this.props.addCardToDeck(title,dataQuestion))
-    .then(data => console.log('foi um sucesso na store reduxXX', this.props.allDecks))
+    .then((data) => this.props.addCardToDeck(title,dataQuestion))
+    .then(this.setState({
+        isAddCard: true,
+    }))
   }
 
   render() {
@@ -67,7 +67,7 @@ class NewQuestionContainer extends Component {
               </View>
             )}
 
-            {isAddCard && (console.log('testette', this.props.allDecks))}
+            {isAddCard && (<Text>Pergunta adicionada com sucesso!</Text>)}
         </View>
       </View>
     )
@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
   }
 })
 
-// export default NewQuestionContainer
 
 function mapStateToProps(state, ownProps) {
     return {

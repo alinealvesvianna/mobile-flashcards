@@ -30,7 +30,7 @@ class DeckListContainer extends Component {
                     }
                   )}>
                 <Text style={styles.deckTitle}>{item.title}</Text>
-                <Text style={styles.deckCardsText}>{item.questions.length} cardsss</Text>
+                <Text style={styles.deckCardsText}>{item.questions.length} cards</Text>
             </TouchableOpacity>
         </View>
     )
@@ -52,7 +52,6 @@ class DeckListContainer extends Component {
 
         {allDecks && (
           <View>
-          {console.log(allDecks)}
             <FlatList
               data={allDecks}
               renderItem={({ item }) => this.renderItem({ item  })}
