@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import configureStore from './store/configureStore'
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator, TabNavigator } from 'react-navigation'
 import {
   View,
   StyleSheet,
@@ -18,20 +18,57 @@ import { Constants } from 'expo'
 
 const store = configureStore()
 
-function DeckStatusBar ({backgroundColor, ...props}) {
-    return (
-      <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
-        <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-      </View>
-    )
+function DeckStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
+
+const Tabs = TabNavigator(
+  {
+    DeckList: {
+      screen: DeckListContainer,
+      navigationOptions: {
+        tabBarLabel: 'Home'
+      }
+    },
+    NewDeck: {
+      screen: NewDeckContainer,
+      navigationOptions: {
+        tabBarLabel: 'Criar Baralho'
+      }
+    }
+  },
+  {
+    navigationOptions: {
+        header: null
+      },
+      tabBarOptions: {
+        labelStyle: {
+            fontSize: 15,
+          },
+        activeTintColor: '#fff',
+        inactiveTintColor: 'yellow',
+        style: {
+          height: 56,
+          backgroundColor: '#f0f',
+          shadowColor: 'rgba(0, 0, 0, 0.24)',
+          shadowOffset: {
+            width: 0,
+            height: 3
+          },
+          shadowRadius: 6,
+          shadowOpacity: 1
+        }
+      }
   }
+)
 
 const MainNavigator = StackNavigator({
   Home: {
-    screen: DeckListContainer,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Home'
-    })
+    screen: Tabs
   },
   DeckContainer: {
     screen: DeckContainer,
@@ -41,9 +78,12 @@ const MainNavigator = StackNavigator({
   },
   NewDeck: {
     screen: NewDeckContainer,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Novo Deck'
-    })
+    navigationOptions: {
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#f0f'
+      }
+    }
   },
   NewQuestion: {
     screen: NewQuestionContainer,

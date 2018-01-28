@@ -14,6 +14,20 @@ const initialState = {}
           allDecks : decks,
         }
       }
+
+      case types.ADD_CARD_TO_DECK:
+
+      let teste = state.allDecks.map(deck => {
+          if(deck.title === action.title){
+              deck.questions.concat(action.card)
+          }
+          return deck
+      })
+
+      return {
+          ...state,
+          allDecks: teste
+      }
   
       default:
         return state

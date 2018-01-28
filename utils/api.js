@@ -29,7 +29,8 @@ const defaultData = {
 }
 
 export function getDecksInfo() {
-  return AsyncStorage.getItem(APP_STORAGE_KEY).then(data => {
+  return AsyncStorage.getItem(APP_STORAGE_KEY)
+  .then(data => {
     if (data === null) {
       AsyncStorage.setItem(APP_STORAGE_KEY, JSON.stringify(defaultData))
       return defaultData
@@ -48,13 +49,14 @@ export function postTitleDeck(title) {
   )
 }
 
-export function addQuestion(key, card) {
+export function addCard(key, card) {
   return AsyncStorage.getItem(APP_STORAGE_KEY)
     .then(data => JSON.parse(data))
     .then(data => {
       if (typeof data[key] !== 'undefined') {
         data[key].questions.push(card)
         AsyncStorage.setItem(APP_STORAGE_KEY, JSON.stringify(data))
+        return data
       }
     })
     .catch(error => console.log(`An error occurred 😞 ${error}`))

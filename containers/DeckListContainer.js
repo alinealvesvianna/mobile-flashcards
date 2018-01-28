@@ -24,7 +24,10 @@ class DeckListContainer extends Component {
                 style={styles.deckTextArea}
                 onPress={() => this.props.navigation.navigate(
                     'DeckContainer',
-                    { deckTitle: item.title }
+                    { 
+                      deckTitle: item.title,
+                      deckNumberQuestions: item.questions
+                    }
                   )}>
                 <Text style={styles.deckTitle}>{item.title}</Text>
                 <Text style={styles.deckCardsText}>{item.questions.length} cardsss</Text>
