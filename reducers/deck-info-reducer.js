@@ -14,8 +14,7 @@ export default (state = initialState, action) => {
     }
 
     case types.ADD_CARD_TO_DECK: {
-
-      let teste = state.allDecks.map(deck => {
+      let addCard = state.allDecks.map(deck => {
         if (deck.title === action.title) {
           deck.questions.push(action.card)
         }
@@ -24,7 +23,14 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
-        allDecks: teste
+        allDecks: addCard
+      }
+    }
+
+    case types.NEW_DECK: {
+      return {
+        ...state,
+        allDecks: state.allDecks.concat(action.deck)
       }
     }
 

@@ -3,18 +3,22 @@ import { StyleSheet, Text, View, TextInput, Button } from 'react-native'
 import { connect } from 'react-redux'
 import ModalGame from '../components/ModalGame'
 
+import {
+  clearDailyNotification,
+  setLocalNotification
+} from '../utils/notifications'
+
 class QuizContainer extends Component {
   state = {
     answer: '',
     isShowAnswer: false,
     questionNumber: 0,
     correctAnswers: 0,
-    isVisibleModal: false,
+    isVisibleModal: false
   }
 
   onHandleCorrectAnswer = answer => {
     const { questionNumber, correctAnswers } = this.state
-    debugger
     if (answer !== undefined) {
       if (this.state.answer !== '') {
         if (answer === this.state.answer) {
@@ -30,10 +34,10 @@ class QuizContainer extends Component {
       } else {
         this.setState({ isVisibleModal: true })
       }
-    }else{
-        this.setState({
-            finishAnswers: true,
-        })
+    } else {
+      this.setState({
+        finishAnswers: true
+      })
     }
   }
 
@@ -45,6 +49,29 @@ class QuizContainer extends Component {
     }))
   }
 
+  setNotification = questions => {
+    clearDailyNotification()
+      .then(setLocalNotification())
+      .then(
+        this.props.navigation.navigate('DeckContainer', {
+          deckTitle: this.props.navigation.state.params.deckTitle,
+          deckNumberQuestions: questions
+        })
+      )
+  }
+
+  restartQuiz = () => {
+    clearDailyNotification()
+    .then(setLocalNotification())
+    this.setState({
+      answer: '',
+      isShowAnswer: false,
+      questionNumber: 0,
+      correctAnswers: 0,
+      isVisibleModal: false
+    })
+  }
+
   render() {
     const title = this.props.navigation.state.params.deckTitle
 
@@ -53,7 +80,7 @@ class QuizContainer extends Component {
       correctAnswers,
       answer,
       isShowAnswer,
-      isVisibleModal,
+      isVisibleModal
     } = this.state
     const { allDecks } = this.props
 
@@ -72,34 +99,25 @@ class QuizContainer extends Component {
                 {questionNumber === deck.questions.length && (
                   <View>
                     <View>
+                      <Text>Parabéns, você finalizou o seu quiz!</Text>
+                      <Text>Você acertou</Text>
                       <Text>
-                        Congratulations! You have finished quiz
-                      </Text>
-                      <Text>
-                        You have correctly answered
-                      </Text>
-                      <Text>
-                        on {correctAnswers} of {deck.questions.length}
-                        questions
+                        {correctAnswers} de {deck.questions.length}
+                        perguntas!
                       </Text>
                     </View>
                     <View>
                       <Button
-                        onPress={() =>
-                          this.setState({
-                            questionNumber: 0,
-                            correctAnswers: 0
-                          })
-                        }
-                        title="Restart quiz"
+                        onPress={this.restartQuiz}
+                        title="Recomeçar quiz"
                         color="#000"
                       />
                     </View>
                     <View>
                       <Button
-                        onPress={() => navigation.goBack()}
-                        title="Back to deck"
-                        color="#fff"
+                        onPress={() => this.setNotification(deck.questions)}
+                        title="Voltar para o baralho"
+                        color="#000"
                       />
                     </View>
                   </View>
@@ -111,7 +129,8 @@ class QuizContainer extends Component {
                   </Text>
                 </View>
 
-                  {(!isShowAnswer && questionNumber < deck.questions.length) && (
+                {!isShowAnswer &&
+                  questionNumber < deck.questions.length && (
                     <View>
                       <View>
                         <Text
@@ -153,8 +172,8 @@ class QuizContainer extends Component {
                           onPress={() =>
                             this.onHandleCorrectAnswer(
                               questionNumber === deck.questions.length
-                                ? (undefined)
-                                : (deck.questions[questionNumber].answer)
+                                ? undefined
+                                : deck.questions[questionNumber].answer
                             )
                           }
                           title="Resposta Correta"
@@ -175,19 +194,18 @@ class QuizContainer extends Component {
                       </View>
                     </View>
                   )}
-                  {isShowAnswer &&(
+                {isShowAnswer && (
+                  <View>
                     <View>
-                      <View>
-                        <Text>{deck.questions[questionNumber].answer}</Text>
-                      </View>
-                      <Button
-                        onPress={() => this.setState({ isShowAnswer: false })}
-                        title="Voltar para a Pergunta"
-                        color="#f0f"
-                      />
+                      <Text>{deck.questions[questionNumber].answer}</Text>
                     </View>
-                  )}
-
+                    <Button
+                      onPress={() => this.setState({ isShowAnswer: false })}
+                      title="Voltar para a Pergunta"
+                      color="#f0f"
+                    />
+                  </View>
+                )}
               </View>
             )
           }

@@ -8,24 +8,16 @@ export function getDecks(decks) {
 }
 
 export function addCardToDeck(title, card) {
-
-  return { 
-      type: types.ADD_CARD_TO_DECK, 
-      title,
-      card 
-    }
+  return {
+    type: types.ADD_CARD_TO_DECK,
+    title,
+    card
+  }
 }
 
-// export function createDeck(deck) {
-//     return {type: actionTypes.CREATE_DECK, deck}
-// }
-
-// export function addCard(deck) {
-//     return { type: actionTypes.ADD_CARD_TO_DECK, deck}
-// }
-
-// export function deleteDeck(deck_id) {
-//     return {type: actionTypes.DELETE_DECK, deck_id}
-// }
-
-
+export function newDeck(deck) {
+  return {
+    type: types.NEW_DECK,
+    deck
+  }
+}

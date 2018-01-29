@@ -45,11 +45,9 @@ class DeckListContainer extends Component {
   render() {
     const { isLoading } = this.state
     const { allDecks } = this.props
-
     return (
       <View>
         {isLoading && <AppLoading />}
-
         {allDecks && (
           <View>
             <FlatList

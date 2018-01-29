@@ -16,7 +16,6 @@ class DeckContainer extends Component {
         <TouchableOpacity
           onPress={() =>
             this.props.navigation.navigate('NewQuestion', {
-              operation: 'add',
               deckTitle: this.props.navigation.state.params.deckTitle
             })
           }
@@ -35,7 +34,6 @@ class DeckContainer extends Component {
                   key={deck.title}
                   onPress={() =>
                     this.props.navigation.navigate('Quiz', {
-                      operation: 'add',
                       deckTitle: this.props.navigation.state.params.deckTitle
                     })
                   }
