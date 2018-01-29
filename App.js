@@ -52,15 +52,8 @@ const Tabs = TabNavigator(
         activeTintColor: '#fff',
         inactiveTintColor: 'yellow',
         style: {
-          height: 56,
-          backgroundColor: '#f0f',
-          shadowColor: 'rgba(0, 0, 0, 0.24)',
-          shadowOffset: {
-            width: 0,
-            height: 3
-          },
-          shadowRadius: 6,
-          shadowOpacity: 1
+          height: 50,
+          backgroundColor: '#000',
         }
       }
   }
@@ -81,7 +74,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: '#fff',
       headerStyle: {
-        backgroundColor: '#f0f'
+        backgroundColor: '#000'
       }
     }
   },
@@ -104,7 +97,7 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <View style={{ flex: 1 }}>
-          <DeckStatusBar backgroundColor="#f0f" barStyle="light-content" />
+          <DeckStatusBar backgroundColor="#000" barStyle="light-content" />
           <MainNavigator />
         </View>
       </Provider>
@@ -113,10 +106,13 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
+    header: {
+        backgroundColor: '#000',
+        height: 50,
+        width: '80%',
+        padding: 0,
+        paddingBottom: 20,
+        alignItems: 'flex-start',
+        alignContent: 'flex-start',
+    },
 })

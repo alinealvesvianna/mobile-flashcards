@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     modalMessage: {
         textAlign: 'center',
         fontSize: 24,
-        color: '#f0f'
+        color: '#000'
     },
     modalButton: {
         backgroundColor: '#000',
@@ -39,16 +39,4 @@ const styles = StyleSheet.create({
         margin: 16,
         padding: 8
     },
-    modalContent: {
-        backgroundColor: '#fff',
-        padding: 22,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-    },
-    bottomModal: {
-        justifyContent: 'flex-end',
-        margin: 0,
-    }
 })

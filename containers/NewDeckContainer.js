@@ -51,13 +51,13 @@ class NewDeckContainer extends Component {
           errorMessage={'A resposta não pode ser vazia!'}
           onCloseClick={() => this.setState({ isVisibleModal: false })}
         />
-        <View style={styles.formContainer}>
-          <View style={styles.formContainerTitleBox}>
-            <Text style={styles.formContainerTitle}>
+        <View style={styles.formContent}>
+          <View style={styles.formContentTitleBox}>
+            <Text style={styles.formContentTitle}>
               Qual é o titulo do seu novo baralho?
             </Text>
           </View>
-          <View style={styles.formContainerInputBox}>
+          <View style={styles.formContentInput}>
             <TextInput
               style={{
                 height: 40,
@@ -70,8 +70,8 @@ class NewDeckContainer extends Component {
               value={title}
             />
           </View>
-          <View style={styles.formContainerButton}>
-            <Button onPress={this.onPress} title="Submit" color="#fff" />
+          <View style={styles.formContentBtn}>
+            <Button onPress={this.onPress} title="Criar Novo Baralho" color="#fff" />
           </View>
         </View>
       </View>
@@ -97,23 +97,23 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '100%'
   },
-  formContainer: {
+  formContent: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     width: '70%'
   },
-  formContainerTitleBox: {
+  formContentTitleBox: {
     alignItems: 'center',
     width: '100%',
     marginBottom: 30
   },
-  formContainerTitle: {
+  formContentTitle: {
     fontSize: 40,
     textAlign: 'center'
   },
-  formContainerInputBox: {
+  formContentInput: {
     width: '100%',
     borderWidth: 1,
     borderColor: '#000',
@@ -122,11 +122,7 @@ const styles = StyleSheet.create({
     paddingRight: 3,
     marginBottom: 30
   },
-  formContainerInput: {
-    marginTop: 8,
-    marginBottom: 5
-  },
-  formContainerButton: {
+  formContentBtn: {
     backgroundColor: '#000',
     borderWidth: 1,
     borderColor: '#000',

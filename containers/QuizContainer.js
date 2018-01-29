@@ -61,8 +61,7 @@ class QuizContainer extends Component {
   }
 
   restartQuiz = () => {
-    clearDailyNotification()
-    .then(setLocalNotification())
+    clearDailyNotification().then(setLocalNotification())
     this.setState({
       answer: '',
       isShowAnswer: false,
@@ -99,21 +98,20 @@ class QuizContainer extends Component {
                 {questionNumber === deck.questions.length && (
                   <View>
                     <View>
-                      <Text>Parabéns, você finalizou o seu quiz!</Text>
-                      <Text>Você acertou</Text>
-                      <Text>
-                        {correctAnswers} de {deck.questions.length}
-                        perguntas!
+                      <Text style={styles.formContentTitle}>Parabéns, você finalizou o seu quiz!</Text>
+                      <Text style={styles.formContentTitle}>Você acertou</Text>
+                      <Text style={styles.formContentTitleBold}>
+                        {correctAnswers} de {deck.questions.length} perguntas!
                       </Text>
                     </View>
-                    <View>
+                    <View style={styles.formContentBtn}>
                       <Button
                         onPress={this.restartQuiz}
                         title="Recomeçar quiz"
                         color="#000"
                       />
                     </View>
-                    <View>
+                    <View style={styles.formContentBtn}>
                       <Button
                         onPress={() => this.setNotification(deck.questions)}
                         title="Voltar para o baralho"
@@ -133,13 +131,7 @@ class QuizContainer extends Component {
                   questionNumber < deck.questions.length && (
                     <View>
                       <View>
-                        <Text
-                          style={{
-                            color: '#f0f',
-                            fontSize: 16,
-                            marginBottom: 10
-                          }}
-                        >
+                        <Text style={styles.formContentTitle}>
                           {deck.questions[questionNumber].question}
                         </Text>
                       </View>
@@ -154,7 +146,7 @@ class QuizContainer extends Component {
                           color: '#000'
                         }}
                       />
-                      <View>
+                      <View style={styles.formContentInput}>
                         <TextInput
                           style={{
                             height: 40,
@@ -167,7 +159,7 @@ class QuizContainer extends Component {
                           value={this.state.answer}
                         />
                       </View>
-                      <View>
+                      <View style={styles.formContentBtn}>
                         <Button
                           onPress={() =>
                             this.onHandleCorrectAnswer(
@@ -177,19 +169,14 @@ class QuizContainer extends Component {
                             )
                           }
                           title="Resposta Correta"
-                          color="#0ff"
-                          style={{
-                            borderColor: 'gray',
-                            borderWidth: 1,
-                            marginBottom: 10
-                          }}
+                          color="#17ab08"
                         />
                       </View>
-                      <View>
+                      <View style={styles.formContentBtn}>
                         <Button
                           onPress={this.onHandleIncorrectAnswer.bind(this)}
                           title="Resposta Incorreta"
-                          color="#ff0"
+                          color="#ca0526"
                         />
                       </View>
                     </View>
@@ -197,12 +184,12 @@ class QuizContainer extends Component {
                 {isShowAnswer && (
                   <View>
                     <View>
-                      <Text>{deck.questions[questionNumber].answer}</Text>
+                      <Text style={styles.formContentTitle}>{deck.questions[questionNumber].answer}</Text>
                     </View>
                     <Button
                       onPress={() => this.setState({ isShowAnswer: false })}
                       title="Voltar para a Pergunta"
-                      color="#f0f"
+                      color="#ca0526"
                     />
                   </View>
                 )}
@@ -226,114 +213,50 @@ export default connect(mapStateToProps, {})(QuizContainer)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
     backgroundColor: '#fff',
+    alignItems: 'center',
     justifyContent: 'flex-start',
-    alignContent: 'center',
-    paddingBottom: 70
+    width: '100%'
   },
-  questionNumbersContainer: {
-    margin: 5,
-    height: 30,
-    justifyContent: 'flex-start',
-    alignContent: 'center'
-  },
-  questionNumbersText: {
-    textAlign: 'left',
-    fontSize: 16
-  },
-  questionAnswerContainer: {
+  formContent: {
     flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
     justifyContent: 'center',
-    alignContent: 'center'
+    width: '70%'
   },
-  questionContainerTitleBox: {
+  formContentTitleBox: {
     alignItems: 'center',
     width: '100%',
-    marginBottom: 0
+    marginBottom: 30
   },
-  questionContainerTitle: {
+  formContentTitle: {
     fontSize: 40,
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: 20,
   },
-  questionInputContainer: {
+  formContentTitleBold:{
+    fontSize: 40,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  formContentInput: {
+    width: '100%',
     borderWidth: 1,
     borderColor: '#000',
     borderRadius: 5,
     paddingLeft: 3,
     paddingRight: 3,
-    width: '80%',
-    marginLeft: '10%',
-    marginTop: 30,
     marginBottom: 30
   },
-  questionInput: {
-    marginTop: 8,
-    marginBottom: 5
-  },
-  questionButtonCorrect: {
-    backgroundColor: '#00FF00',
-    borderWidth: 1,
-    borderColor: '#00FF00',
-    borderRadius: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    width: '50%',
-    marginLeft: '25%',
-    marginBottom: 10
-  },
-  questionButtonIncorrect: {
-    backgroundColor: '#ff0',
-    borderWidth: 1,
-    borderColor: '#ff0',
-    borderRadius: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    width: '50%',
-    marginLeft: '25%'
-  },
-  resultContainer: {
-    flex: 1,
-    width: '100%',
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignContent: 'center',
-    paddingBottom: 70
-  },
-  resultContainerTitleContainer: {
-    alignItems: 'center',
-    width: '80%',
-    marginLeft: '12%',
-    marginBottom: 30
-  },
-  resultContainerTitle: {
-    fontSize: 36,
-    textAlign: 'center',
-    marginBottom: 20
-  },
-  resultContainerResult: {
-    fontSize: 20,
-    textAlign: 'center'
-  },
-  resultButtonTakeAgain: {
+  formContentBtn: {
     backgroundColor: '#fff',
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#07675f',
     borderRadius: 5,
     paddingLeft: 15,
     paddingRight: 15,
-    width: '50%',
-    marginLeft: '25%',
-    marginBottom: 10
-  },
-  resultButtonBackToDecks: {
-    backgroundColor: '#000',
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    width: '50%',
-    marginLeft: '25%'
+    marginBottom: 20,
   }
 })

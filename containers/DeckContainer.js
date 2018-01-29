@@ -8,9 +8,11 @@ class DeckContainer extends Component {
     const { allDecks } = this.props
 
     return (
-      <View style={styles.container}>
-        <Text>{this.props.navigation.state.params.deckTitle}</Text>
-        <Text>{`${
+      <View style={styles.containerDeck}>
+        <Text style={styles.deckContainerTitle}>
+          {this.props.navigation.state.params.deckTitle}
+        </Text>
+        <Text style={styles.deckContainerQuestions}>{`${
           this.props.navigation.state.params.deckNumberQuestions.length
         } Perguntas`}</Text>
         <TouchableOpacity
@@ -20,7 +22,9 @@ class DeckContainer extends Component {
             })
           }
         >
-          <Text>Adicionar Perguntas</Text>
+          <View style={styles.button}>
+            <Text>Adicionar Perguntas</Text>
+          </View>
         </TouchableOpacity>
 
         {allDecks &&
@@ -38,7 +42,9 @@ class DeckContainer extends Component {
                     })
                   }
                 >
-                  <Text>Começar Quiz</Text>
+                  <View style={styles.button}>
+                    <Text>Começar Quiz</Text>
+                  </View>
                 </TouchableOpacity>
               )
             }
@@ -57,10 +63,29 @@ function mapStateToProps(state, ownProps) {
 export default connect(mapStateToProps, {})(DeckContainer)
 
 const styles = StyleSheet.create({
-  container: {
+  containerDeck: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  deckContainerTitle: {
+    fontSize: 25,
+    marginBottom: 10,
+    fontWeight: 'bold'
+  },
+  deckContainerQuestions: {
+    color: '#757575',
+    fontSize: 16
+  },
+  button: {
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: '#000',
+    borderWidth: 1,
+    margin: 16,
+    padding: 8
   }
 })

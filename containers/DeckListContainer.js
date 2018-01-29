@@ -19,20 +19,20 @@ class DeckListContainer extends Component {
 
   renderItem = ({ item }) => {
     return (
-        <View key={item.title}>
-            <TouchableOpacity
-                style={styles.deckTextArea}
-                onPress={() => this.props.navigation.navigate(
-                    'DeckContainer',
-                    { 
-                      deckTitle: item.title,
-                      deckNumberQuestions: item.questions
-                    }
-                  )}>
-                <Text style={styles.deckTitle}>{item.title}</Text>
-                <Text style={styles.deckCardsText}>{item.questions.length} cards</Text>
-            </TouchableOpacity>
-        </View>
+      <View key={item.title}>
+        <TouchableOpacity
+          style={styles.deckItem}
+          onPress={() =>
+            this.props.navigation.navigate('DeckContainer', {
+              deckTitle: item.title,
+              deckNumberQuestions: item.questions
+            })
+          }
+        >
+          <Text style={styles.deckItemTitle}>{item.title}</Text>
+          <Text style={styles.deckItemText}>{item.questions.length} cards</Text>
+        </TouchableOpacity>
+      </View>
     )
   }
 
@@ -52,7 +52,7 @@ class DeckListContainer extends Component {
           <View>
             <FlatList
               data={allDecks}
-              renderItem={({ item }) => this.renderItem({ item  })}
+              renderItem={({ item }) => this.renderItem({ item })}
             />
           </View>
         )}
@@ -65,7 +65,6 @@ function mapStateToProps(state, ownProps) {
   return {
     allDecks: state.deckInfo.allDecks
   }
-
 }
 
 export default connect(mapStateToProps, {
@@ -73,40 +72,18 @@ export default connect(mapStateToProps, {
 })(DeckListContainer)
 
 const styles = StyleSheet.create({
-  decksListContainer: {
-    flex: 1,
+  deckItem: {
     width: '100%',
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-  deckTitle: {
-    fontSize: 30,
-    textAlign: 'center'
-  },
-  deckContainer: {
-    flex: 1,
-    width: '100%'
-  },
-  deck: {
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
     borderBottomColor: '#000',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 30,
-    paddingBottom: 30,
-    alignItems: 'center'
+    borderBottomWidth: 1,
+    padding: 40,
   },
-  deckTitle: {
+  deckItemTitle: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
-  deckTextArea: {
-    width: '100%',
-    alignItems: 'center'
+  deckItemText: {
+    color: '#757575',
   },
-  deckCardsText: {
-    color: '#000'
-  }
 })

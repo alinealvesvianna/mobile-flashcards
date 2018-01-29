@@ -8,7 +8,7 @@ class NewQuestionContainer extends Component {
   state = {
     question: '',
     answer: '',
-    isAddCard: false,
+    isAddCard: false
   }
 
   onPress = () => {
@@ -19,20 +19,26 @@ class NewQuestionContainer extends Component {
       answer: this.state.answer
     }
     addCard(title, dataQuestion)
-    .then((data) => this.props.addCardToDeck(title,dataQuestion))
-    .then(this.setState({
-        isAddCard: true,
-    }))
+      .then(data => this.props.addCardToDeck(title, dataQuestion))
+      .then(
+        this.setState({
+          isAddCard: true
+        })
+      )
   }
 
   render() {
-    const { isAddCard,question, answer } = this.state
+    const { isAddCard, question, answer } = this.state
     return (
       <View style={styles.container}>
-        <View style={styles.formContainer}>
-        <Text>{`Você está adicionando uma pergunta e resposta para ${this.props.navigation.state.params.deckTitle}`}</Text>
+        <View style={styles.formContent}>
+          <Text
+            style={styles.formContentTitle}
+          >{`Você está adicionando uma pergunta e resposta para ${
+            this.props.navigation.state.params.deckTitle
+          }`}</Text>
 
-          <View style={styles.formContainerInputBox}>
+          <View style={styles.formContentInput}>
             <TextInput
               style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
               onChangeText={question => this.setState({ question })}
@@ -41,7 +47,7 @@ class NewQuestionContainer extends Component {
             />
           </View>
 
-          <View style={styles.formContainerInputBox}>
+          <View style={styles.formContentInput}>
             <TextInput
               style={{
                 height: 40,
@@ -57,17 +63,12 @@ class NewQuestionContainer extends Component {
 
           {this.state.answer !== '' &&
             this.state.question !== '' && (
-              <View style={styles.formContainerButton}>
-                <Button
-                  style={styles.formContainerInput}
-                  title="Enviar"
-                  color="#000"
-                  onPress={this.onPress}
-                />
+              <View style={styles.formContentBtn}>
+                <Button title="Enviar" color="#fff" onPress={this.onPress} />
               </View>
             )}
 
-            {isAddCard && (<Text>Pergunta adicionada com sucesso!</Text>)}
+          {isAddCard && <Text style={styles.message}>Pergunta adicionada com sucesso!</Text>}
         </View>
       </View>
     )
@@ -79,17 +80,53 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start',
+    width: '100%'
+  },
+  formContent: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '70%'
+  },
+
+  formContentTitle: {
+    fontSize: 40,
+    marginBottom: 30,
+    textAlign: 'center'
+  },
+  formContentInput: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 5,
+    paddingLeft: 3,
+    paddingRight: 3,
+    marginBottom: 30
+  },
+  formContentBtn: {
+    backgroundColor: '#000',
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 5,
+    paddingLeft: 15,
+    paddingRight: 15
+  },
+  message:{
+    fontSize: 20,
+    marginTop: 30,
+    textAlign: 'center',
+    color: '#17ab08'
   }
 })
 
-
 function mapStateToProps(state, ownProps) {
-    return {
-      allDecks: state.deckInfo.allDecks
-    }
+  return {
+    allDecks: state.deckInfo.allDecks
   }
-  
-  export default connect(mapStateToProps, {
-    addCardToDeck
-  })(NewQuestionContainer)
+}
+
+export default connect(mapStateToProps, {
+  addCardToDeck
+})(NewQuestionContainer)
