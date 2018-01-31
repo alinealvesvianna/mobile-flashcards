@@ -9,6 +9,7 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native'
+import { setLocalNotification } from './utils/notifications'
 import DeckContainer from './containers/DeckContainer'
 import DeckListContainer from './containers/DeckListContainer'
 import NewDeckContainer from './containers/NewDeckContainer'
@@ -43,19 +44,19 @@ const Tabs = TabNavigator(
   },
   {
     navigationOptions: {
-        header: null
+      header: null
+    },
+    tabBarOptions: {
+      labelStyle: {
+        fontSize: 15
       },
-      tabBarOptions: {
-        labelStyle: {
-            fontSize: 15,
-          },
-        activeTintColor: '#fff',
-        inactiveTintColor: 'yellow',
-        style: {
-          height: 50,
-          backgroundColor: '#000',
-        }
+      activeTintColor: '#fff',
+      inactiveTintColor: 'yellow',
+      style: {
+        height: 50,
+        backgroundColor: '#000'
       }
+    }
   }
 )
 
@@ -93,6 +94,11 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={store}>
@@ -106,13 +112,13 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    header: {
-        backgroundColor: '#000',
-        height: 50,
-        width: '80%',
-        padding: 0,
-        paddingBottom: 20,
-        alignItems: 'flex-start',
-        alignContent: 'flex-start',
-    },
+  header: {
+    backgroundColor: '#000',
+    height: 50,
+    width: '80%',
+    padding: 0,
+    paddingBottom: 20,
+    alignItems: 'flex-start',
+    alignContent: 'flex-start'
+  }
 })

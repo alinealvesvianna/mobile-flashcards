@@ -49,19 +49,14 @@ class QuizContainer extends Component {
     }))
   }
 
-  setNotification = questions => {
-    clearDailyNotification()
-      .then(setLocalNotification())
-      .then(
-        this.props.navigation.navigate('DeckContainer', {
-          deckTitle: this.props.navigation.state.params.deckTitle,
-          deckNumberQuestions: questions
-        })
-      )
+  backToDeck = questions => {
+    this.props.navigation.navigate('DeckContainer', {
+      deckTitle: this.props.navigation.state.params.deckTitle,
+      deckNumberQuestions: questions
+    })
   }
 
   restartQuiz = () => {
-    clearDailyNotification().then(setLocalNotification())
     this.setState({
       answer: '',
       isShowAnswer: false,
@@ -93,12 +88,18 @@ class QuizContainer extends Component {
 
         {allDecks.map((deck, index) => {
           if (deck.title === title) {
+            {
+              clearDailyNotification()
+              .then(setLocalNotification())
+            }
             return (
               <View key={index}>
                 {questionNumber === deck.questions.length && (
                   <View>
                     <View>
-                      <Text style={styles.formContentTitle}>Parabéns, você finalizou o seu quiz!</Text>
+                      <Text style={styles.formContentTitle}>
+                        Parabéns, você finalizou o seu quiz!
+                      </Text>
                       <Text style={styles.formContentTitle}>Você acertou</Text>
                       <Text style={styles.formContentTitleBold}>
                         {correctAnswers} de {deck.questions.length} perguntas!
@@ -113,7 +114,7 @@ class QuizContainer extends Component {
                     </View>
                     <View style={styles.formContentBtn}>
                       <Button
-                        onPress={() => this.setNotification(deck.questions)}
+                        onPress={() => this.backToDeck(deck.questions)}
                         title="Voltar para o baralho"
                         color="#000"
                       />
@@ -184,7 +185,9 @@ class QuizContainer extends Component {
                 {isShowAnswer && (
                   <View>
                     <View>
-                      <Text style={styles.formContentTitle}>{deck.questions[questionNumber].answer}</Text>
+                      <Text style={styles.formContentTitle}>
+                        {deck.questions[questionNumber].answer}
+                      </Text>
                     </View>
                     <Button
                       onPress={() => this.setState({ isShowAnswer: false })}
@@ -233,13 +236,13 @@ const styles = StyleSheet.create({
   formContentTitle: {
     fontSize: 40,
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 20
   },
-  formContentTitleBold:{
+  formContentTitleBold: {
     fontSize: 40,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 20
   },
   formContentInput: {
     width: '100%',
@@ -257,6 +260,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingLeft: 15,
     paddingRight: 15,
-    marginBottom: 20,
+    marginBottom: 20
   }
 })

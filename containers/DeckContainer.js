@@ -12,9 +12,16 @@ class DeckContainer extends Component {
         <Text style={styles.deckContainerTitle}>
           {this.props.navigation.state.params.deckTitle}
         </Text>
-        <Text style={styles.deckContainerQuestions}>{`${
-          this.props.navigation.state.params.deckNumberQuestions.length
-        } Perguntas`}</Text>
+        {allDecks.map((deck, index) => {
+          if (deck.title === this.props.navigation.state.params.deckTitle) {
+            return (
+              <Text key={index} style={styles.deckContainerQuestions}>{`${
+                deck.questions.length
+              } Perguntas`}</Text>
+            )
+          }
+        })}
+
         <TouchableOpacity
           onPress={() =>
             this.props.navigation.navigate('NewQuestion', {
@@ -56,7 +63,8 @@ class DeckContainer extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    allDecks: state.deckInfo.allDecks
+    allDecks: state.deckInfo.allDecks,
+    deckTitle: ownProps.navigation.state.params.deckTitle
   }
 }
 

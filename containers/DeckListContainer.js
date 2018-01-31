@@ -17,7 +17,7 @@ class DeckListContainer extends Component {
     isLoading: true
   }
 
-  renderItem = ({ item }) => {
+  renderItem = ({ item, index }) => {
     return (
       <View key={item.title}>
         <TouchableOpacity
@@ -51,6 +51,7 @@ class DeckListContainer extends Component {
         {allDecks && (
           <View>
             <FlatList
+              keyExtractor={item => item.title}
               data={allDecks}
               renderItem={({ item }) => this.renderItem({ item })}
             />
@@ -77,13 +78,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomColor: '#000',
     borderBottomWidth: 1,
-    padding: 40,
+    padding: 40
   },
   deckItemTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   deckItemText: {
-    color: '#757575',
-  },
+    color: '#757575'
+  }
 })
