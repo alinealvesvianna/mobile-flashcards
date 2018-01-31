@@ -17,7 +17,7 @@ class DeckListContainer extends Component {
     isLoading: true
   }
 
-  renderItem = ({ item, index }) => {
+  renderItem = ({ item }) => {
     return (
       <View key={item.title}>
         <TouchableOpacity

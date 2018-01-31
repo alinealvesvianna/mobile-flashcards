@@ -12,7 +12,7 @@ The application was tested on iPhone X - iOS 11.1
 
 ## Setup
 
-* Install and start the API server
+* Install and start the Application
     - `git clone https://github.com/alinealvesvianna/mobile-flashcards.git`
     - `cd mobile-flashcards/`
     - `yarn install`
