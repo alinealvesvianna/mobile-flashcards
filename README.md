@@ -1,6 +1,6 @@
 # Mobile Flashcards
 
-The application was tested on iPhone X - iOS 11.1
+The application was tested on iPhone X - iOS 11.1 - teste
 
 ## App Usage
 * Deck Main or Deck Detail:
